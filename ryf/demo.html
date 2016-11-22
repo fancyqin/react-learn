@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="build/react.js"></script>
+    <script src="build/react-dom.js"></script>
+    <script src="build/browser.min.js"></script>
+</head>
+
+<body>
+    <div id="d1"></div>
+    <div id="d2"></div>
+    <div id="d3"></div>
+    <div id="d4"></div>
+    <div id="d5"></div>
+    <script type="text/babel">
+        function gid(id){
+            return document.getElementById(id)
+        }
+        //demo1
+        ReactDOM.render(
+            <h1 className="ded">Hello,React</h1>,
+            gid('d1')
+        );
+
+        //demo2
+        var names = ['Alice','Jack','Bluce'];
+        ReactDOM.render(
+            <div>
+                {
+                    names.map(function(name){
+                        return <div>Hello, {name}</div>
+                    })
+                }
+            </div>,
+            gid('d2')
+        );
+
+        //demo3
+        var arr = [<h1>我是h1</h1>,<h2>我是h2</h2>];
+        ReactDOM.render(
+            <div>{arr}</div>,
+            gid('d3')
+        )
+
+        //demo4
+        var HM = React.createClass({
+            render: function(){
+                return <h1 className="rer">Hello, my name is {this.props.name}</h1>
+            }
+        })
+        ReactDOM.render(
+            <HM name="Qinfan" />,
+            gid('d4')
+        )
+
+        //demo5
+        var NodeList =  React.createClass({
+            render: function(){
+                return (
+                    <ol>
+                        {
+                            React.Children.map(this.props.children,function(child){
+                                return <li>{child}</li>
+                            })
+                        }
+                    </ol>
+                );
+            }
+        });
+        
+        ReactDOM.render(
+            <NodeList>
+                <span>Hello</span>
+                <i>world</i>
+            </NodeList>,
+            gid('d5')
+        )
+
+        
+    </script>
+</body>
+
+</html>
