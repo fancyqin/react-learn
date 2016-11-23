@@ -7,6 +7,7 @@
     <script src="build/react.js"></script>
     <script src="build/react-dom.js"></script>
     <script src="build/browser.min.js"></script>
+    <script src="build/jquery.min.js"></script>
 </head>
 
 <body>
@@ -15,6 +16,14 @@
     <div id="d3"></div>
     <div id="d4"></div>
     <div id="d5"></div>
+    <div id="d6"></div>
+    <div id="d7"></div>
+    <div id="d8"></div>
+    <div id="d9"></div>
+    <div id="d10"></div>
+    <div id="d11"></div>
+    <div id="d12"></div>
+
     <script type="text/babel">
         function gid(id){
             return document.getElementById(id)
@@ -29,11 +38,11 @@
         var names = ['Alice','Jack','Bluce'];
         ReactDOM.render(
             <div>
-                {
-                    names.map(function(name){
-                        return <div>Hello, {name}</div>
-                    })
-                }
+            {
+                names.map(function(name){
+                    return <div>Hello, {name}</div>
+                })
+            }
             </div>,
             gid('d2')
         );
@@ -78,8 +87,212 @@
             </NodeList>,
             gid('d5')
         )
-
         
+        //demo6
+        var MyTitle = React.createClass({
+            propTypes:{
+                title: React.PropTypes.string.isRequired
+            },
+            render: function(){
+                return <h1>{this.props.title}</h1>
+            },
+            getDefaultProps: function(){
+                return{
+                    title :"fuck me"
+                }
+            }
+        })
+
+        ReactDOM.render(
+            <MyTitle />,
+            gid('d6')
+        )
+        
+
+        //demo7 
+        var MyComp = React.createClass({
+            handleClick: function(){
+                this.refs.myTextInput.focus();
+            },
+            render: function(){
+                return (
+                    <div>
+                        <input type="text" ref="myTextInput" />
+                        <input type="button" value="focus the text input" onClick={this.handleClick} />
+                    </div>
+                );
+            }
+        })
+
+        ReactDOM.render(
+            <MyComp/>,
+            gid('d7')
+        )
+
+
+        //demo8
+        var LikeButton = React.createClass({
+            getInitialState: function(){
+                return {like: false}
+            },
+            hClick: function(){
+                this.setState({liked:!this.state.liked})
+            },
+            render: function(){
+                var text = this.state.liked ? 'like':'have\'t liked';
+                return (
+                    <p onClick={this.hClick}>You {text} this. Click to toggle...</p>
+                );
+            }
+        })
+        
+        ReactDOM.render(
+            <LikeButton />,
+            gid('d8')
+        )
+
+
+        //demo9
+        var Input = React.createClass({
+            getInitialState: function(){
+                return {
+                    value: 'shit'
+                }         
+            },
+            hChange: function(event){
+                this.setState({value:event.target.value})
+            },
+            render: function(){
+                var value = this.state.value;
+                return (
+                    <div>
+                        <input type="text" value={value} onChange={this.hChange} />
+                        <p>{value}</p>
+                    </div>                    
+                );
+            }
+        })
+        
+        ReactDOM.render(
+            <Input />,
+            gid('d9')
+        )
+
+        //demo10
+        
+        var Hello = React.createClass({
+            getInitialState: function(){
+                return{
+                    opacity: 1.0
+                };
+            },
+            componentDidMount: function(){
+                this.timer = setInterval(function(){
+                    var opac = this.state.opacity;
+                    opac -=.05;
+                    if(opac<0.1){
+                        opac = 1.0
+                    }
+                    this.setState({
+                        opacity: opac
+                    });
+                }.bind(this),100);
+            },
+            render: function(){
+                return (
+                    <div style={{opacity: this.state.opacity}}>
+                        Hello {this.props.name}
+                    </div>
+                );
+            }
+        });
+
+        ReactDOM.render(
+            <Hello name="HHHHH" />,
+            gid('d10')
+        )
+
+        //demo11
+
+        var UserGist = React.createClass({
+            getInitialState: function(){
+                return{
+                    username:'',
+                    lastGistUrl:''
+                };
+            },
+            componentDidMount: function(){
+                $.get(this.props.source,function(result){
+                    var lastGist = result[0];
+                    if(this.isMounted()){
+                        this.setState({
+                            username: lastGist.owner.login,
+                            lastGistUrl: lastGist.html_url
+                        });
+                    }
+                }.bind(this));
+            },
+            render: function(){
+                return (
+                    <div>
+                        {this.state.username}'s last gist is
+                        <a target="_blank" href={this.state.lastGistUrl}>here</a>.
+                    </div>
+                );
+            }
+        });
+
+        ReactDOM.render(
+            <UserGist source="https://api.github.com/users/octocat/gists" />,
+            gid('d11')
+        )
+        
+
+        //demo12
+        var RepoList = React.createClass({
+            getInitialState: function(){
+                return {
+                    loading:true,
+                    error:null,
+                    data:null
+                };
+            },
+            componentDidMount(){
+                this.props.promise.then(
+                    value => this.setState({loading:false,data:value}),
+                    error => this.setState({loading:false,error:error})
+                );
+            },
+            render: function(){
+                if(this.state.loading){
+                    return <span>loading</span>;
+                }
+                else if(this.state.error !==null){
+                    return <span>Error: {this.state.error.message}</span>;
+                }else{
+                    var repos = this.state.data.items;
+                    var repoList = repos.map(function(repo){
+                        return (
+                            <li>
+                                <a href={repo.html_url}>{repo.name}</a>({repo.stargazers_count} stars)<br/>{repo.description}
+                            </li>
+                        );
+                    });
+                    return (
+                        <main>
+                            <h1>Most Popular JavaScript Projects in Github</h1>
+                            <ol>{repoList}</ol>
+                        </main>
+                    );
+                }
+            }
+        })
+
+        ReactDOM.render(
+            <RepoList promise={$.getJSON('https://api.github.com/search/repositories?q=javascript&sort=stars')} />,
+            gid('d12')
+        )
+
     </script>
 </body>
 
