@@ -20,6 +20,9 @@ var CommentBox = React.createClass({
         this.loadCommentsFromServer();
         setInterval(this.loadCommentsFromServer,this.props.pollInterval)
     },
+    handleCommentSubmit:function(){
+        //todo
+    },
     render: function(){
         return (
             <div className="comment-box">
