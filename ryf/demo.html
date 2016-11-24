@@ -4,10 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
-    <script src="build/react.js"></script>
-    <script src="build/react-dom.js"></script>
-    <script src="build/browser.min.js"></script>
-    <script src="build/jquery.min.js"></script>
+    <script src="../build/react.js"></script>
+    <script src="../build/react-dom.js"></script>
+    <script src="../build/browser.min.js"></script>
+    <script src="../build/jquery.min.js"></script>
 </head>
 
 <body>
@@ -262,6 +262,18 @@
                     value => this.setState({loading:false,data:value}),
                     error => this.setState({loading:false,error:error})
                 );
+
+
+                //same with
+                /*
+                var _this = this;
+                this.props.promise.then(function(value){
+                    _this.setState({loading:false,data:value})
+                },function(error){
+                    this.setState({loading:false,error:error})
+                })
+                */
+
             },
             render: function(){
                 if(this.state.loading){
