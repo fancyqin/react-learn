@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Todo</title>
+    <style rel="stylesheet">
+        .todo-box{
+            width: 400px;
+            margin: 30px auto;
+            font-family: "Helvetica Neue","Microsoft JhengHei", Helvetica, Arial, sans-serif;
+        }
+        .todo-in{
+            width: 100%;
+        }
+        .todo-in input{
+            box-sizing: border-box;
+            width: 100%;
+            height: 40px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            padding: 5px 10px;
+        }
+        .todo-list{
+            list-style: none;
+            margin: 10px 0;
+            padding: 0;
+        }
+        .todo-list .todo-item{
+            height: 30px;
+            line-height: 30px;
+            font-size: 14px;
+        }
+        .todo-list .todo-item .time{
+            float: right;
+        }
+    </style>
+    <script src="../build/react.js"></script>
+    <script src="../build/react-dom.js"></script>
+    <script src="../build/babel.min.js"></script>
+</head>
+<body>
+<div id="todo"></div>
+<script type="text/babel" src="todo.js"></script>
+</body>
+</html>
