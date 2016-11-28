@@ -4,10 +4,17 @@
     <meta charset="UTF-8">
     <title>Todo</title>
     <style rel="stylesheet">
+        body,input,button{
+            font-family: "Helvetica Neue","Microsoft YaHei", Helvetica, Arial, sans-serif;
+        }
+        #todo{
+            max-width: 600px;
+            width: 100%;
+            padding: 0 30px;
+            margin: 0 auto;
+        }
         .todo-box{
-            width: 400px;
             margin: 30px auto;
-            font-family: "Helvetica Neue","Microsoft JhengHei", Helvetica, Arial, sans-serif;
         }
         .todo-in{
             width: 100%;
@@ -19,6 +26,7 @@
             border-radius: 5px;
             border: 1px solid #ddd;
             padding: 5px 10px;
+
         }
         .todo-list{
             list-style: none;
@@ -29,9 +37,26 @@
             height: 30px;
             line-height: 30px;
             font-size: 14px;
+            position: relative;
+            border-bottom: 1px solid #eee;
+        }
+        .todo-list .todo-item .inner{
+            border: 0;
+            padding: 0;
+
+        }
+        .todo-list .todo-item .close{
+            display: inline-block;
+            float: right;
+            font-size: 16px;
+            line-height: 30px;
+            padding: 0 5px;
+            cursor: pointer;
+            margin-left: 10px;
         }
         .todo-list .todo-item .time{
             float: right;
+            color: #999;
         }
     </style>
     <script src="../build/react.js"></script>
