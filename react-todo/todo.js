@@ -28,31 +28,39 @@ var TodoBox = React.createClass({
                 <div className="todo-in">
                     <input type="text" ref="inputIn" placeholder="Please enter something.." onKeyUp={this.bdKeyUp}/>
                 </div>
-                <TodoList data={this.state.data} />
+                <TodoList data={this.state.data} func={this.itemChange} />
             </div>
         )
+    },
+    deleteItem: function(id){
+        this.state.data.forEach(function (item,i) {
+            var datas = this.state.data;
+            if (item.id === id){
+                datas.splice(i,1);
+                this.setState({data:datas})
+            }
+        });
+
+    },
+    changeItem: function(id){
+
     },
     itemChange: {
         changeItem: function(id){
 
         }.bind(this),
-        deleteItem: function(id){
-            for (item in this.state.data){
-                if(item.id === id){
-                    
-                }
-            }
-        }.bind(this)
+        deleteItem: this.deleteItem
     }
 });
 var TodoList = React.createClass({
     render: function () {
+        var _this =this;
         return (
             <ul className="todo-list">
                 {
                     this.props.data.map(function(dat){
                         return(
-                            <TodoItem data={dat} />
+                            <TodoItem key={dat.id} data={dat} func={_this.props.func} />
                         )
                     })
                 }
@@ -68,16 +76,15 @@ var TodoItem = React.createClass({
     },
     bdDoneChange: function () {
         this.setState({done:this.refs.checkbox.checked});
-        console.log(this.props.data);
     },
     bdDelete:function(){
-
+        this.props.func.deleteItem(this.props.data.id);
     },
     render: function () {
         return(
             <li className="todo-item" ref="item" id={this.props.data.id}>
                 <input type="checkbox" ref="checkbox" className="checkbox" onChange={this.bdDoneChange} checked={this.state.done} />
-                <input type="text" className="inner" onChange={this.todo} value={this.props.data.text}/>
+                <input type="text" className="inner" onChange={this.bdDelete} value={this.props.data.text}/>
                 <span className="close" onClick={this.bdDelete}>&times;</span>
             </li>
         )
