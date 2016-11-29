@@ -5,18 +5,14 @@
 var TodoBox = React.createClass({
     getInitialState: function(){
         return {
-            data:[
-                //{text:':octopus: :zap: :cat: = :octocat:',time:"1989-01-30",done:true},
-                //{text:'hfeyeety',time:"1993-02-16",done:false}
-            ]
+            data:[]
         }
     },
+    componentWillMount:function(){
+        var data = JSON.parse(localStorage.getItem('todo-react')) || [];
+        this.setState({data:data});
+    },
     render: function(){
-        //var func = {
-        //    deleteItem: this.deleteItem,
-        //    changeItemText: this.changeItemText,
-        //    changeItemDone: this.changeItemDone
-        //};
         return (
             <div className="todo-box">
                 <div className="todo-in">
@@ -34,6 +30,7 @@ var TodoBox = React.createClass({
             var itemId = date.getTime();
             var thisData = {id:itemId,text:input.value,done:false};
             this.setState({data:this.state.data.concat([thisData])});
+            localStorage.setItem('todo-react',JSON.stringify(this.state.data.concat([thisData])));
             input.value ='';
         }
     },
@@ -44,36 +41,7 @@ var TodoBox = React.createClass({
             }
         });
     },
-    ////delete
-    //deleteItem: function(id){
-    //    var thisData = this.state.data;
-    //    var _this = this;
-    //    this.getItemById(id, function (item,i) {
-    //        thisData.splice(i,1);
-    //        _this.setState({data:thisData});
-    //        //todo
-    //    });
-    //},
-    ////change item text
-    //changeItemText: function(id,text){
-    //    var thisData = this.state.data;
-    //    var _this = this;
-    //    this.getItemById(id,function(item,i){
-    //        item.text = text;
-    //        thisData.splice(i,1,item);
-    //        _this.setState({data:thisData});
-    //    });
-    //},
-    ////change item done
-    //changeItemDone: function(id,done){
-    //    var thisData = this.state.data;
-    //    var _this = this;
-    //    this.getItemById(id,function(item,i){
-    //        item.done = done;
-    //        thisData.splice(i,1,item);
-    //        _this.setState({data:thisData});
-    //    });
-    //},
+    //change
     changeItem: function (id,changes) {
         var thisData = this.state.data;
         var _this = this;
@@ -88,7 +56,7 @@ var TodoBox = React.createClass({
                 }
             }
             _this.setState({data:thisData});
-
+            localStorage.setItem('todo-react',JSON.stringify(thisData));
         });
     }
 
@@ -132,10 +100,6 @@ var TodoItem = React.createClass({
         )
     }
 });
-
-
-
-
 
 ReactDOM.render(
     <TodoBox />,
