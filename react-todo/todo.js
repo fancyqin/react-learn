@@ -4,23 +4,44 @@
 
 var TodoBox = React.createClass({
     getInitialState: function(){
-        return {
-            data:[]
-        }
+        return {data:[]}
     },
     componentWillMount:function(){
         var data = JSON.parse(localStorage.getItem('todo-react')) || [];
         this.setState({data:data});
     },
     render: function(){
+        var dones = 0;
+        this.state.data.forEach(function(itm){
+            if(itm.done){
+                dones++;
+            }
+        });
         return (
             <div className="todo-box">
+                <div className="func">
+                    <label><input type="checkbox" ref="checkAll" onChange={this.checkAll}
+                                  checked={this.state.data.length === dones && dones!==0}
+                                  disabled={this.state.data.length===0}
+                    />Select All</label>
+                    <span class="num">Total: {this.state.data.length} Completed: {dones}</span>
+                </div>
                 <div className="todo-in">
                     <input type="text" ref="inputIn" placeholder="Please enter something.." onKeyUp={this.bdKeyUp}/>
                 </div>
                 <TodoList data={this.state.data} func={this.changeItem} />
             </div>
         )
+    },
+    checkAll: function(){
+        var _this = this;
+        var thisData = this.state.data;
+        thisData.forEach(function(itm,i){
+            itm.done = _this.refs.checkAll.checked;
+            thisData.splice(i,1,itm);
+        });
+        this.setState({data:thisData});
+        localStorage.setItem('todo-react',JSON.stringify(thisData));
     },
     //add
     bdKeyUp: function(e){

@@ -1,0 +1,63 @@
+body,input,button{
+    font-family: "Helvetica Neue","Microsoft YaHei", Helvetica, Arial, sans-serif;
+}
+#todo{
+    max-width: 600px;
+    width: 100%;
+    padding: 0 30px;
+    margin: 0 auto;
+}
+input[type=checkbox]{
+    vertical-align: middle;
+    margin-right: 5px;
+}
+.todo-box{
+    margin: 30px auto;
+}
+.func{
+    font-size: 12px;
+    line-height: 30px;
+}
+.func span{
+    float: right;
+    color: #999;
+}
+.todo-in{
+    width: 100%;
+}
+.todo-in input{
+    box-sizing: border-box;
+    width: 100%;
+    height: 40px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    padding: 5px 10px;
+
+}
+.todo-list{
+    list-style: none;
+    margin: 10px 0;
+    padding: 0;
+}
+.todo-list .todo-item{
+    height: 30px;
+    line-height: 30px;
+    font-size: 14px;
+    position: relative;
+    border-bottom: 1px solid #eee;
+}
+.todo-list .todo-item .inner{
+    border: 0;
+    padding: 0;
+    width: 500px;
+}
+.todo-list .todo-item .close{
+    display: inline-block;
+    float: right;
+    font-size: 16px;
+    line-height: 30px;
+    padding: 0 5px;
+    cursor: pointer;
+    margin-left: 10px;
+    color: #999;
+}
