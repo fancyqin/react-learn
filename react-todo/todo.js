@@ -27,7 +27,7 @@ var TodoBox = React.createClass({
                     <span class="num">Total: {this.state.data.length} Completed: {dones}</span>
                 </div>
                 <div className="todo-in">
-                    <input type="text" ref="inputIn" placeholder="Please enter something.." onKeyUp={this.bdKeyUp}/>
+                    <input type="text" ref="inputIn" placeholder="Lets get down to business...Marshall" onKeyUp={this.bdKeyUp}/>
                 </div>
                 <TodoList data={this.state.data} func={this.changeItem} />
             </div>
@@ -72,8 +72,10 @@ var TodoBox = React.createClass({
                 thisData.splice(i,1);
             }else{
                 for(var key in changes){
-                    item[key] = changes[key];
-                    thisData.splice(i,1,item);
+                    if(changes.hasOwnProperty(key)){
+                        item[key] = changes[key];
+                        thisData.splice(i,1,item);
+                    }
                 }
             }
             _this.setState({data:thisData});
