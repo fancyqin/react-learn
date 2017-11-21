@@ -21,7 +21,6 @@
   "homepage": "https://github.com/fancyqin/react-learn#readme",
   "dependencies": {
     "babel-runtime": "6.x",
-    "react": "15.x",
     "react-dom": "15.x"
   },
   "devDependencies": {
@@ -44,6 +43,7 @@
     "eslint-plugin-react": "latest",
     "ghooks": "^1.0.3",
     "open-browser-webpack-plugin": "0.0.2",
+    "react": "^15.6.2",
     "style-loader": "~0.13.0",
     "validate-commit-msg": "2.x",
     "webpack": "latest",
